@@ -6,7 +6,7 @@
     {
       "chainId": 59144,
       "address": "0xb2B6Cd37b4051631578346E65Da6e32192f23580",
-      "symbol": "USDT_Token",
+      "symbol": "USDT",
       "name": "USDT_Token",
       "decimals": 18,
       "logoURI": "https://raw.githubusercontent.com/USDT-Token1/USDT_Token/main/logo.png"
