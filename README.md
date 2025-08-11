@@ -20,7 +20,7 @@ This token implements a cooldown between transactions to prevent sandwich attack
 
 ## Links
 
-- [Website](https://usdt-token1.github.io/USDT_Token/)
+- [Website](https://usdt-token1.github.io/EURT_Token/)
 - [Contract on BSCScan](https://bscscan.com/address/0xcf6d9114889111f82f70d67e0154ddf9b4b39af9)
 
 ## License
