@@ -7,7 +7,7 @@ This token implements a cooldown between transactions to prevent sandwich attack
 ## Token Info
 
 - **Name:** Euro_Token  
-- **Symbol:** USDT  
+- **Symbol:** EURT  
 - **Decimals:** 18  
 - **Total Supply:** 10,000,000,000 USDT  
 - **Deployed to:** [0xcf6d9114889111f82f70d67e0154ddf9b4b39af9](https://bscscan.com/token/0xcf6d9114889111f82f70d67e0154ddf9b4b39af9)
