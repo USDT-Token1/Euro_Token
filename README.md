@@ -10,7 +10,7 @@ This token implements a cooldown between transactions to prevent sandwich attack
 - **Symbol:** USDT  
 - **Decimals:** 18  
 - **Total Supply:** 10,000,000,000 USDT  
-- **Deployed to:** [0xb2B6Cd37b4051631578346E65Da6e32192f23580](https://bscscan.com/token/0xb2B6Cd37b4051631578346E65Da6e32192f23580)
+- **Deployed to:** [0xb2B6Cd37b4051631578346E65Da6e32192f23580](https://bscscan.com/token/0xcf6d9114889111f82f70d67e0154ddf9b4b39af9)
 
 ## Features
 
@@ -21,7 +21,7 @@ This token implements a cooldown between transactions to prevent sandwich attack
 ## Links
 
 - [Website](https://usdt-token1.github.io/USDT_Token/)
-- [Contract on BSCScan](https://bscscan.com/address/0xb2B6Cd37b4051631578346E65Da6e32192f23580)
+- [Contract on BSCScan](https://bscscan.com/address/0xcf6d9114889111f82f70d67e0154ddf9b4b39af9)
 
 ## License
 
