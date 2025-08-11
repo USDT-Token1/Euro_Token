@@ -1,28 +1,45 @@
+# Euro_Token (EURT)
 
-# EURT_Token
+Offizielle Projektseite und Skript, um den Euro_Token mit einem Klick zu MetaMask hinzuzufügen.
 
-Euro_Token is an experimental BEP-20 token with built-in MEV protection.  
-This token implements a cooldown between transactions to prevent sandwich attacks and bots.
+![Logo](logo.png)
 
-## Token Info
+## Token-Details
 
 - **Name:** Euro_Token  
 - **Symbol:** EURT  
 - **Decimals:** 18  
-- **Total Supply:** 10,000,000,000 USDT  
-- **Deployed to:** [0xcf6d9114889111f82f70d67e0154ddf9b4b39af9](https://bscscan.com/token/0xcf6d9114889111f82f70d67e0154ddf9b4b39af9)
+- **Netzwerk:** Ethereum Mainnet  
+- **Contract-Adresse:** [`0xcF6d9114889111f82f70D67E0154DDF9b4b39af9`](https://etherscan.io/token/0xcF6d9114889111f82f70D67E0154DDF9b4b39af9)  
 
-## Features
+## Website
 
-- Anti-MEV bot protection (3-minute cooldown per address)
-- Mintable by owner
-- Ownable and based on OpenZeppelin contracts
+Die Seite ist unter GitHub Pages verfügbar:  
+➡ **[https://usdt-token1.github.io/Euro_Token/](https://usdt-token1.github.io/Euro_Token/)**
 
-## Links
+Hier kannst du den Token direkt per Klick zu MetaMask hinzufügen.
 
-- [Website](https://usdt-token1.github.io/EURT_Token/)
-- [Contract on BSCScan](https://bscscan.com/address/0xcf6d9114889111f82f70d67e0154ddf9b4b39af9)
+## Verwendung
 
-## License
+1. **MetaMask installieren**  
+   - Desktop: [MetaMask Browser Extension](https://metamask.io/download/)  
+   - Mobile: MetaMask App aus dem App Store / Google Play Store installieren.
 
-MIT
+2. **Website öffnen**  
+   - Desktop: Direkt im Browser mit installierter MetaMask-Erweiterung.  
+   - Mobile: Im **MetaMask In-App-Browser** (Wallet → Browser → URL eingeben).
+
+3. **Token hinzufügen**  
+   - Auf den Button „Zu MetaMask hinzufügen“ klicken.  
+   - Bestätigen, um EURT zu deiner Wallet hinzuzufügen.
+
+## Hinweise
+
+- Stelle sicher, dass dein MetaMask auf **Ethereum Mainnet** eingestellt ist.  
+- Die Contract-Adresse ist in **Checksum-Form** angegeben.  
+- Auf Mobilgeräten funktioniert der MetaMask-Button nur im In-App-Browser.  
+- Dieses Repository enthält das vollständige HTML-/JS-Skript (siehe `index.html`), um den Token hinzuzufügen.
+
+---
+
+© 2025 Euro_Token – Alle Rechte vorbehalten.
