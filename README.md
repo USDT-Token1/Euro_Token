@@ -1,5 +1,5 @@
 
-#EURT_Token
+# EURT_Token
 
 Euro_Token is an experimental BEP-20 token with built-in MEV protection.  
 This token implements a cooldown between transactions to prevent sandwich attacks and bots.
