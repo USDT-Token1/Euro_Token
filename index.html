@@ -1,39 +1,51 @@
+<button class="btn" id="addTokenBtn">Zu MetaMask hinzufügen</button>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('.btn');
-  btn.addEventListener('click', addToken);
+  document.getElementById('addTokenBtn').addEventListener('click', addToken);
 });
 
-async function addToken() {
-  // 1) Provider-Erkennung
-  if (typeof window.ethereum === 'undefined') {
-    alert('MetaMask wurde nicht gefunden. Bitte installiere die MetaMask-Erweiterung oder öffne die Seite im MetaMask Mobile Browser.');
-    // Optional: window.open('https://metamask.io/download/', '_blank');
-    return;
+const TOKEN = {
+  address: '0xcF6d9114889111f82f70D67E0154DDF9b4b39af9', // EURT (Ethereum)
+  symbol: 'EURT',
+  decimals: 18,
+  image: '' // optional: Logo-URL
+};
+
+const ETHEREUM = { chainId: '0x1' };
+
+async function ensureProvider() {
+  if (!window.ethereum) {
+    alert('MetaMask nicht gefunden. Bitte installiere MetaMask oder nutze den MetaMask In-App-Browser (mobil).');
+    return false;
   }
+  return true;
+}
 
+async function ensureEthereumMainnet() {
   try {
-    // 2) (Optional) Accounts anfragen – kann helfen, Berechtigungen sicherzustellen
-    // await window.ethereum.request({ method: 'eth_requestAccounts' });
+    await ethereum.request({ method: 'wallet_switchEthereumChain', params: [ETHEREUM] });
+  } catch (e) {
+    // Für Ethereum Mainnet ist wallet_addEthereumChain normalerweise nicht nötig
+    throw e;
+  }
+}
 
-    // 3) Token hinzufügen – Symbol auf USDT angepasst (oder dein gewünschtes Symbol eintragen)
-    const wasAdded = await window.ethereum.request({
+async function addToken() {
+  if (!(await ensureProvider())) return;
+  try {
+    // optional: await ethereum.request({ method: 'eth_requestAccounts' });
+    await ensureEthereumMainnet();
+
+    const wasAdded = await ethereum.request({
       method: 'wallet_watchAsset',
-      params: {
-        type: 'ERC20',
-        options: {
-          address: '0xcf6d9114889111f82f70d67e0154ddf9b4b39af9',
-          symbol: 'EURT',  // vorher stand hier EURT
-          decimals: 18,
-          image: 'logo.png'        // ggf. Logo-URL angeben (https://…)
-        },
-      },
+      params: { type: 'ERC20', options: TOKEN },
     });
 
-    alert(wasAdded ? 'Token wurde zu MetaMask hinzugefügt!' : 'Token wurde nicht hinzugefügt.');
+    alert(wasAdded ? 'EURT wurde zu MetaMask hinzugefügt!' : 'Token wurde nicht hinzugefügt.');
   } catch (err) {
     console.error(err);
-    alert('Fehler beim Hinzufügen zu MetaMask: ' + (err && err.message ? err.message : err));
+    alert('Fehler: ' + (err?.message || err));
   }
 }
 </script>
