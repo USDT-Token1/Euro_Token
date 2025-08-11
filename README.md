@@ -2,8 +2,6 @@
 
 Offizielle Projektseite und Skript, um den Euro_Token mit einem Klick zu MetaMask hinzuzufügen.
 
-![Logo](logo.png)
-
 ## Token-Details
 
 - **Name:** Euro_Token  
