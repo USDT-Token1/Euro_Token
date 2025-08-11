@@ -1,92 +1,39 @@
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.btn');
+  btn.addEventListener('click', addToken);
+});
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USDT_Token</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f6f6f6;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        .container {
-            padding: 50px 20px;
-        }
-        h1 {
-            font-size: 3em;
-            color: #333;
-        }
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .card p {
-            font-size: 1.2em;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 1em;
-            color: white;
-            background-color: #1e88e5;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #1565c0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>USDT_Token</h1>
-        <div class="card">
-            <p><strong>Token Symbol:</strong> USDT</p>
-            <p><strong>Contract-Adresse:</strong><br>
-                <code>0xcf6d9114889111f82f70d67e0154ddf9b4b39af9</code>
-            </p>
-            <button class="btn" onclick="addToken()">Zu MetaMask hinzufügen</button>
-            <p style="margin-top: 20px; font-style: italic;">Noch nicht auf einer DEX gelistet.</p>
-        </div>
-    </div>
+async function addToken() {
+  // 1) Provider-Erkennung
+  if (typeof window.ethereum === 'undefined') {
+    alert('MetaMask wurde nicht gefunden. Bitte installiere die MetaMask-Erweiterung oder öffne die Seite im MetaMask Mobile Browser.');
+    // Optional: window.open('https://metamask.io/download/', '_blank');
+    return;
+  }
 
-    <script>
-        async function addToken() {
-            try {
-                const wasAdded = await window.ethereum.request({
-                    method: 'wallet_watchAsset',
-                    params: {
-                        type: 'ERC20',
-                        options: {
-                            address: '0xcf6d9114889111f82f70d67e0154ddf9b4b39af9',
-                            symbol: 'EURT',
-                            decimals: 18,
-                            image: ''
-                        },
-                    },
-                });
+  try {
+    // 2) (Optional) Accounts anfragen – kann helfen, Berechtigungen sicherzustellen
+    // await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-                if (wasAdded) {
-                    alert('USDT_Token wurde zu MetaMask hinzugefügt!');
-                } else {
-                    alert('Token wurde nicht hinzugefügt.');
-                }
-            } catch (error) {
-                console.error(error);
-                alert('Fehler beim Hinzufügen zu MetaMask.');
-            }
-        }
-    </script>
-</body>
-</html>
+    // 3) Token hinzufügen – Symbol auf USDT angepasst (oder dein gewünschtes Symbol eintragen)
+    const wasAdded = await window.ethereum.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: '0xcf6d9114889111f82f70d67e0154ddf9b4b39af9',
+          symbol: 'USDT',  // vorher stand hier EURT
+          decimals: 18,
+          image: ''        // ggf. Logo-URL angeben (https://…)
+        },
+      },
+    });
+
+    alert(wasAdded ? 'Token wurde zu MetaMask hinzugefügt!' : 'Token wurde nicht hinzugefügt.');
+  } catch (err) {
+    console.error(err);
+    alert('Fehler beim Hinzufügen zu MetaMask: ' + (err && err.message ? err.message : err));
+  }
+}
+</script>
