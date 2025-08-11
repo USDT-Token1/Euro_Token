@@ -1,12 +1,12 @@
 
 # USDT_Token
 
-USDT_Token is an experimental BEP-20 token with built-in MEV protection.  
+Euro_Token is an experimental BEP-20 token with built-in MEV protection.  
 This token implements a cooldown between transactions to prevent sandwich attacks and bots.
 
 ## Token Info
 
-- **Name:** USDT_Token  
+- **Name:** Euro_Token  
 - **Symbol:** USDT  
 - **Decimals:** 18  
 - **Total Supply:** 10,000,000,000 USDT  
