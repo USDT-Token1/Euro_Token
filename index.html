@@ -1,41 +1,148 @@
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('.btn').addEventListener('click', addToken);
-});
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Euro_Token (EURT) – Zu MetaMask hinzufügen</title>
+  <meta name="description" content="Füge den Euro_Token (EURT) mit einem Klick zu MetaMask hinzu." />
+  <style>
+    :root { --bg:#0b0f14; --card:#141a22; --fg:#e8eef6; --muted:#a2b3c6; --accent:#4ea1ff; --accent-2:#2b7bdc; }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    .wrap{min-height:100%;display:grid;place-items:center;padding:24px}
+    .card{width:100%;max-width:560px;background:linear-gradient(180deg,#151c25 0%, #10161e 100%);border:1px solid #202a36;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:28px}
+    .header{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+    .logo{width:56px;height:56px;border-radius:12px;border:1px solid #263244;background:#0d1218;object-fit:cover}
+    h1{font-size:1.4rem;line-height:1.2;margin:0}
+    .sub{color:var(--muted);font-size:.95rem;margin:4px 0 0}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0}
+    .row{display:flex;justify-content:space-between;gap:12px;background:#0e141c;border:1px solid #1d2733;border-radius:10px;padding:12px}
+    .k{color:var(--muted)}
+    code, .v{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#d7e6fb;word-break:break-all}
+    .btn{appearance:none;border:0;border-radius:12px;background:var(--accent);color:#001733;font-weight:700;padding:14px 18px;font-size:1rem;cursor:pointer;transition:transform .05s ease, background .2s ease;display:inline-flex;align-items:center;gap:10px;justify-content:center;width:100%}
+    .btn:hover{background:var(--accent-2)}
+    .btn:active{transform:translateY(1px)}
+    .note{color:var(--muted);font-size:.9rem;margin-top:14px;text-align:center}
+    .actions{display:flex;gap:10px;margin-top:10px}
+    .ghost{background:#0f1520;color:#d7e6fb;border:1px solid #223146}
+    .ghost:hover{background:#142034}
+    a.link{color:#9dc7ff;text-decoration:none}
+    a.link:hover{text-decoration:underline}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <img src="logo.png" alt="Token Logo" class="logo" />
+        <div>
+          <h1>Euro_Token • EURT</h1>
+          <p class="sub">Per Klick zu MetaMask hinzufügen (Ethereum Mainnet)</p>
+        </div>
+      </div>
 
-const TOKEN = {
-  address: '0xcF6d9114889111f82f70D67E0154DDF9b4b39af9',
-  symbol: 'EURT',
-  decimals: 18,
-  image: '' // optional: Logo-URL
-};
+      <div class="grid">
+        <div class="row">
+          <span class="k">Contract</span>
+          <span class="v" id="addr">0xcF6d9114889111f82f70D67E0154DDF9b4b39af9</span>
+        </div>
+        <div class="row">
+          <span class="k">Symbol</span>
+          <span class="v">EURT</span>
+        </div>
+        <div class="row">
+          <span class="k">Decimals</span>
+          <span class="v">18</span>
+        </div>
+      </div>
 
-async function ensureProvider() {
-  if (!window.ethereum) {
-    alert('MetaMask nicht gefunden. Bitte installiere MetaMask oder nutze den MetaMask In-App-Browser.');
-    return false;
-  }
-  return true;
-}
+      <button class="btn" id="addBtn">Zu MetaMask hinzufügen</button>
 
-async function switchToEthereum() {
-  try {
-    await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x1' }] });
-  } catch (e) { throw e; }
-}
+      <div class="actions">
+        <button class="btn ghost" id="copyBtn" title="Adresse kopieren">Adresse kopieren</button>
+        <a class="btn ghost" href="https://etherscan.io/token/0xcF6d9114889111f82f70D67E0154DDF9b4b39af9" target="_blank" rel="noopener noreferrer">Auf Etherscan ansehen</a>
+      </div>
 
-async function addToken() {
-  if (!(await ensureProvider())) return;
-  try {
-    await switchToEthereum();
-    const wasAdded = await ethereum.request({
-      method: 'wallet_watchAsset',
-      params: { type: 'ERC20', options: TOKEN },
+      <p class="note" id="note">Hinweis: Auf Mobilgeräten funktioniert das nur im MetaMask In-App-Browser.</p>
+      <p class="note hidden" id="mmMissing">
+        MetaMask wurde nicht gefunden. <a class="link" href="https://metamask.io/download/" target="_blank" rel="noopener">MetaMask installieren</a> und die Seite dann neu öffnen.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // --- Konfiguration ---
+    const TOKEN = {
+      address: '0xcF6d9114889111f82f70D67E0154DDF9b4b39af9', // Checksum-Form
+      symbol: 'EURT',
+      decimals: 18,
+      image: '' // Optional: öffentliche Logo-URL eintragen
+    };
+    const ETHEREUM_MAINNET = { chainId: '0x1' };
+
+    // --- UI-Elemente ---
+    const addBtn = document.getElementById('addBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const mmMissing = document.getElementById('mmMissing');
+
+    // Mobile-Hinweis anpassen
+    (function () {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+      if (isMobile) {
+        document.getElementById('note').textContent = 'Tipp: Öffne diese Seite im MetaMask In-App-Browser (Wallet → Browser).';
+      }
+    })();
+
+    // Copy-Button
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(TOKEN.address);
+        copyBtn.textContent = 'Kopiert ✓';
+        setTimeout(() => (copyBtn.textContent = 'Adresse kopieren'), 1600);
+      } catch {
+        alert('Konnte die Adresse nicht kopieren.');
+      }
     });
-    alert(wasAdded ? 'EURT wurde zu MetaMask hinzugefügt!' : 'Token wurde nicht hinzugefügt.');
-  } catch (err) {
-    console.error(err);
-    alert('Fehler: ' + (err?.message || err));
-  }
-}
-</script>
+
+    // Hauptaktion: Token hinzufügen
+    addBtn.addEventListener('click', async () => {
+      if (typeof window.ethereum === 'undefined') {
+        mmMissing.classList.remove('hidden');
+        alert('MetaMask nicht gefunden. Bitte installiere MetaMask oder nutze den MetaMask In-App-Browser.');
+        return;
+      }
+
+      try {
+        // Optional, aber hilfreich: Accounts anfragen
+        // await ethereum.request({ method: 'eth_requestAccounts' });
+
+        // 1) Auf Ethereum Mainnet wechseln, falls Nutzer auf anderem Netz ist
+        try {
+          await ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [ETHEREUM_MAINNET],
+          });
+        } catch (switchErr) {
+          // Für Mainnet ist addEthereumChain i.d.R. nicht nötig; andere Fehler weiterwerfen
+          throw switchErr;
+        }
+
+        // 2) Token hinzufügen
+        const wasAdded = await ethereum.request({
+          method: 'wallet_watchAsset',
+          params: { type: 'ERC20', options: TOKEN },
+        });
+
+        alert(wasAdded ? 'EURT wurde zu MetaMask hinzugefügt!' : 'Token wurde nicht hinzugefügt.');
+      } catch (err) {
+        console.error(err);
+        // Häufige Fehler freundlich darstellen
+        const msg = (err && err.message) ? err.message :
+          (typeof err === 'string' ? err : 'Unbekannter Fehler');
+        alert('Fehler beim Hinzufügen: ' + msg);
+      }
+    });
+  </script>
+</body>
+</html>
