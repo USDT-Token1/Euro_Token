@@ -1,47 +1,37 @@
-<button class="btn" id="addTokenBtn">Zu MetaMask hinzufügen</button>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('addTokenBtn').addEventListener('click', addToken);
+  document.querySelector('.btn').addEventListener('click', addToken);
 });
 
 const TOKEN = {
-  address: '0xcF6d9114889111f82f70D67E0154DDF9b4b39af9', // EURT (Ethereum)
+  address: '0xcF6d9114889111f82f70D67E0154DDF9b4b39af9',
   symbol: 'EURT',
   decimals: 18,
   image: '' // optional: Logo-URL
 };
 
-const ETHEREUM = { chainId: '0x1' };
-
 async function ensureProvider() {
   if (!window.ethereum) {
-    alert('MetaMask nicht gefunden. Bitte installiere MetaMask oder nutze den MetaMask In-App-Browser (mobil).');
+    alert('MetaMask nicht gefunden. Bitte installiere MetaMask oder nutze den MetaMask In-App-Browser.');
     return false;
   }
   return true;
 }
 
-async function ensureEthereumMainnet() {
+async function switchToEthereum() {
   try {
-    await ethereum.request({ method: 'wallet_switchEthereumChain', params: [ETHEREUM] });
-  } catch (e) {
-    // Für Ethereum Mainnet ist wallet_addEthereumChain normalerweise nicht nötig
-    throw e;
-  }
+    await ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x1' }] });
+  } catch (e) { throw e; }
 }
 
 async function addToken() {
   if (!(await ensureProvider())) return;
   try {
-    // optional: await ethereum.request({ method: 'eth_requestAccounts' });
-    await ensureEthereumMainnet();
-
+    await switchToEthereum();
     const wasAdded = await ethereum.request({
       method: 'wallet_watchAsset',
       params: { type: 'ERC20', options: TOKEN },
     });
-
     alert(wasAdded ? 'EURT wurde zu MetaMask hinzugefügt!' : 'Token wurde nicht hinzugefügt.');
   } catch (err) {
     console.error(err);
